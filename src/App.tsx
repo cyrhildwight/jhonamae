@@ -83,13 +83,13 @@ export default function App() {
 
       {/* Background Orbs - Using radial gradients instead of heavy filters for scroll performance */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 opacity-20 dark:opacity-40" style={{ isolation: 'isolate' }}>
-        <motion.div 
+        <motion.div
           animate={{ opacity: [0.1, 0.3, 0.1] }}
           transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-[radial-gradient(circle,var(--color-dusty-rose)_0%,transparent_70%)] opacity-30"
         />
-        <motion.div 
-          animate={{ 
+        <motion.div
+          animate={{
             x: [0, 50, 0],
             y: [0, -30, 0]
           }}
@@ -260,7 +260,7 @@ export default function App() {
             "Every flower blooms in its own time."
           </p>
           <p className="mt-8 text-ink/40 font-bold uppercase tracking-[0.3em] text-[10px] md:text-xs">
-            Cultivated with infinite care for <span className="text-dusty-rose">Jhonamae Parang</span>
+            Cultivated with infinite care for <span className="text-dusty-rose">Jhonamae Paran</span>
           </p>
           <div className="mt-12 flex justify-center gap-1">
             <div className="w-1.5 h-1.5 rounded-full bg-dusty-rose/30"></div>
