@@ -27,8 +27,11 @@ export function ButterflyGarden() {
   const sprY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
-    // Initialize butterflies
-    const initial = Array.from({ length: 6 }).map((_, i) => ({
+    // Reduced initial butterfly count
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const count = isMobile ? 3 : 5;
+
+    const initial = Array.from({ length: count }).map((_, i) => ({
       id: i,
       x: Math.random() * window.innerWidth,
       y: Math.random() * window.innerHeight,
@@ -69,6 +72,7 @@ function ButterflyItem({ butterfly, sprX, sprY }: { butterfly: Butterfly; sprX: 
         top: sprY,
         x: offsetX,
         y: offsetY,
+        willChange: "left, top, transform"
       }}
       animate={{
         x: [offsetX, offsetX + 50, offsetX - 50, offsetX],

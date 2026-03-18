@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { memo } from "react";
 
 interface RealisticFlowerProps {
   className?: string;
@@ -7,17 +8,15 @@ interface RealisticFlowerProps {
   type?: 'rose' | 'lotus' | 'daisy';
 }
 
-export function RealisticFlower({ className = "", color = "#C27A88", delay = 0, type = 'rose' }: RealisticFlowerProps) {
+export const RealisticFlower = memo(({ className = "", color = "#C27A88", delay = 0, type = 'rose' }: RealisticFlowerProps) => {
   const colorId = color.replace('#', '');
 
   const renderRose = () => {
     const layers = [
-      { count: 6, scale: 1.0, rotationOffset: 0, brightness: 1.1 },
-      { count: 6, scale: 0.85, rotationOffset: 30, brightness: 1.0 },
-      { count: 5, scale: 0.7, rotationOffset: 60, brightness: 0.9 },
-      { count: 5, scale: 0.55, rotationOffset: 90, brightness: 0.8 },
-      { count: 4, scale: 0.4, rotationOffset: 120, brightness: 0.7 },
-      { count: 3, scale: 0.25, rotationOffset: 150, brightness: 0.6 },
+      { count: 5, scale: 1.0, rotationOffset: 0, brightness: 1.1 },
+      { count: 5, scale: 0.8, rotationOffset: 36, brightness: 1.0 },
+      { count: 4, scale: 0.6, rotationOffset: 72, brightness: 0.85 },
+      { count: 3, scale: 0.35, rotationOffset: 108, brightness: 0.7 },
     ];
 
     return (
@@ -186,6 +185,7 @@ export function RealisticFlower({ className = "", color = "#C27A88", delay = 0, 
   return (
     <motion.div
       className={`relative flex items-center justify-center ${className}`}
+      style={{ willChange: "transform" }}
       animate={{ scale: [1, 1.03, 1] }}
       transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: delay }}
     >
@@ -196,4 +196,4 @@ export function RealisticFlower({ className = "", color = "#C27A88", delay = 0, 
       </motion.svg>
     </motion.div>
   );
-}
+});

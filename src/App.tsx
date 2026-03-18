@@ -1,18 +1,34 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense, memo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { EnvelopeReveal } from "./components/EnvelopeReveal";
 import { DailyMessage } from "./components/DailyMessage";
-import { InspirationCards } from "./components/InspirationCards";
-import { AffirmationMirror } from "./components/AffirmationMirror";
-import { GrowthGarden } from "./components/GrowthGarden";
 import { FloatingPetals } from "./components/FloatingPetals";
-import { DailyCompliment } from "./components/DailyCompliment";
 import { ButterflyGarden } from "./components/ButterflyGarden";
-import { GratitudeJournal } from "./components/GratitudeJournal";
-import { LoveNotes } from "./components/LoveNotes";
-import { BreathingGarden } from "./components/BreathingGarden";
 import { dailyMessages } from "./data/messages";
 import { Flower2, Moon, Sun } from "lucide-react";
+
+// Lazy load components that are further down the page
+const DailyCompliment = React.lazy(() => import("./components/DailyCompliment").then(m => ({ default: m.DailyCompliment })));
+const GrowthGarden = React.lazy(() => import("./components/GrowthGarden").then(m => ({ default: m.GrowthGarden })));
+const GratitudeJournal = React.lazy(() => import("./components/GratitudeJournal").then(m => ({ default: m.GratitudeJournal })));
+const LoveNotes = React.lazy(() => import("./components/LoveNotes").then(m => ({ default: m.LoveNotes })));
+const AffirmationMirror = React.lazy(() => import("./components/AffirmationMirror").then(m => ({ default: m.AffirmationMirror })));
+const BreathingGarden = React.lazy(() => import("./components/BreathingGarden").then(m => ({ default: m.BreathingGarden })));
+const InspirationCards = React.lazy(() => import("./components/InspirationCards").then(m => ({ default: m.InspirationCards })));
+
+// Memoize background components to prevent re-renders
+const MemoizedFloatingPetals = memo(FloatingPetals);
+const MemoizedButterflyGarden = memo(ButterflyGarden);
+
+const LoadingSpinner = () => (
+  <div className="flex justify-center p-20">
+    <motion.div 
+      animate={{ rotate: 360 }} 
+      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+      className="w-10 h-10 border-2 border-dusty-rose/30 border-t-dusty-rose rounded-full"
+    />
+  </div>
+);
 
 export default function App() {
   const [isOpened, setIsOpened] = useState(false);
@@ -61,8 +77,8 @@ export default function App() {
 
   return (
     <div className="min-h-screen relative overflow-x-hidden selection:bg-dusty-rose/20 transition-colors duration-1000 bg-paper dark:bg-paper">
-      <FloatingPetals />
-      <ButterflyGarden />
+      <MemoizedFloatingPetals />
+      <MemoizedButterflyGarden />
 
       {/* Background Orbs */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 opacity-20 dark:opacity-40">
@@ -187,37 +203,39 @@ export default function App() {
               transition={{ duration: 1.5 }}
               className="space-y-32 md:space-y-48"
             >
-              <section className="scroll-mt-32">
-                <DailyCompliment currentDay={currentDay} />
-              </section>
+              <Suspense fallback={<LoadingSpinner />}>
+                <section className="scroll-mt-32">
+                  <DailyCompliment currentDay={currentDay} />
+                </section>
 
-              <section className="scroll-mt-32">
-                <DailyMessage message={message} />
-              </section>
+                <section className="scroll-mt-32">
+                  <DailyMessage message={message} />
+                </section>
 
-              <section className="scroll-mt-32">
-                <InspirationCards message={message} />
-              </section>
+                <section className="scroll-mt-32">
+                  <InspirationCards message={message} />
+                </section>
 
-              <section className="scroll-mt-32">
-                <GrowthGarden currentDay={currentDay} />
-              </section>
+                <section className="scroll-mt-32">
+                  <GrowthGarden currentDay={currentDay} />
+                </section>
 
-              <section className="scroll-mt-32">
-                <GratitudeJournal currentDay={currentDay} />
-              </section>
+                <section className="scroll-mt-32">
+                  <GratitudeJournal currentDay={currentDay} />
+                </section>
 
-              <section className="scroll-mt-32">
-                <LoveNotes />
-              </section>
+                <section className="scroll-mt-32">
+                  <LoveNotes />
+                </section>
 
-              <section className="scroll-mt-32">
-                <AffirmationMirror />
-              </section>
+                <section className="scroll-mt-32">
+                  <AffirmationMirror />
+                </section>
 
-              <section className="scroll-mt-32 pb-12">
-                <BreathingGarden />
-              </section>
+                <section className="scroll-mt-32 pb-12">
+                  <BreathingGarden />
+                </section>
+              </Suspense>
             </motion.div>
           )}
         </AnimatePresence>

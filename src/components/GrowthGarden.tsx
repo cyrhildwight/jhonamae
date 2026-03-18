@@ -49,6 +49,7 @@ export function GrowthGarden({ currentDay }: { currentDay: number }) {
         {/* Plant with swaying animation */}
         <motion.div
           className="relative w-12 h-32 origin-bottom mb-3"
+          style={{ willChange: "transform" }}
           animate={{
             scale: bloomed ? 1.1 : (watered || sunned ? 1.05 : 1),
             rotate: bloomed ? [-1.5, 1.5, -1.5] : 0

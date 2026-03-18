@@ -16,8 +16,11 @@ export function FloatingPetals() {
   const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
-    // Generate random particles (mix of petals and potential fireflies)
-    const newParticles: Particle[] = Array.from({ length: 25 }).map((_, i) => ({
+    // Reduced particle count for better performance
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const count = isMobile ? 12 : 20;
+    
+    const newParticles: Particle[] = Array.from({ length: count }).map((_, i) => ({
       id: i,
       x: Math.random() * 100, // percentage
       y: Math.random() * 100, // percentage
@@ -36,6 +39,7 @@ export function FloatingPetals() {
         <motion.div
           key={particle.id}
           className={`absolute ${particle.type === 'firefly' ? 'hidden dark:block' : 'opacity-40 dark:opacity-20'}`}
+          style={{ willChange: "transform, opacity" }}
           initial={{
             left: `${particle.x}%`,
             top: particle.type === 'firefly' ? `${particle.y}%` : `-10%`,
