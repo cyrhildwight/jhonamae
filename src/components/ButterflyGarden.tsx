@@ -68,60 +68,61 @@ function ButterflyItem({ butterfly, sprX, sprY }: { butterfly: Butterfly; sprX: 
   return (
     <motion.div
       style={{
-        left: sprX,
-        top: sprY,
-        x: offsetX,
-        y: offsetY,
-        willChange: "left, top, transform"
+        x: sprX,
+        y: sprY,
+        willChange: "transform"
       }}
-      animate={{
-        x: [offsetX, offsetX + 50, offsetX - 50, offsetX],
-        y: [offsetY, offsetY - 30, offsetY + 30, offsetY],
-      }}
-      transition={{
-        duration: speed,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }}
-      className="absolute"
+      className="absolute top-0 left-0"
     >
       <motion.div
         animate={{
-          rotateY: [0, 80, 0],
-          rotateZ: [butterfly.rotation, butterfly.rotation + 10, butterfly.rotation],
+          x: [offsetX, offsetX + 50, offsetX - 50, offsetX],
+          y: [offsetY, offsetY - 30, offsetY + 30, offsetY],
         }}
         transition={{
-          duration: 0.2 + Math.random() * 0.2,
+          duration: speed,
           repeat: Infinity,
-          ease: "easeInOut"
+          ease: "easeInOut",
         }}
-        className="relative"
       >
-        <svg
-          width={40 * butterfly.scale}
-          height={40 * butterfly.scale}
-          viewBox="0 0 100 100"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="drop-shadow-sm"
+        <motion.div
+          animate={{
+            rotateY: [0, 80, 0],
+            rotateZ: [butterfly.rotation, butterfly.rotation + 10, butterfly.rotation],
+          }}
+          transition={{
+            duration: 0.2 + Math.random() * 0.2,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="relative"
         >
-          {/* Wings */}
-          <path
-            d="M50 50 C30 20 0 30 10 60 C20 80 50 70 50 50 Z"
-            fill={butterfly.color}
-            opacity="0.8"
-          />
-          <path
-            d="M50 50 C70 20 100 30 90 60 C80 80 50 70 50 50 Z"
-            fill={butterfly.color}
-            opacity="0.8"
-          />
-          {/* Body */}
-          <rect x="48" y="40" width="4" height="25" rx="2" fill="#2E2318" />
-          {/* Antennae */}
-          <line x1="50" y1="40" x2="40" y2="30" stroke="#2E2318" strokeWidth="1" />
-          <line x1="50" y1="40" x2="60" y2="30" stroke="#2E2318" strokeWidth="1" />
-        </svg>
+          <svg
+            width={40 * butterfly.scale}
+            height={40 * butterfly.scale}
+            viewBox="0 0 100 100"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="drop-shadow-sm"
+          >
+            {/* Wings */}
+            <path
+              d="M50 50 C30 20 0 30 10 60 C20 80 50 70 50 50 Z"
+              fill={butterfly.color}
+              opacity="0.8"
+            />
+            <path
+              d="M50 50 C70 20 100 30 90 60 C80 80 50 70 50 50 Z"
+              fill={butterfly.color}
+              opacity="0.8"
+            />
+            {/* Body */}
+            <rect x="48" y="40" width="4" height="25" rx="2" fill="#2E2318" />
+            {/* Antennae */}
+            <line x1="50" y1="40" x2="40" y2="30" stroke="#2E2318" strokeWidth="1" />
+            <line x1="50" y1="40" x2="60" y2="30" stroke="#2E2318" strokeWidth="1" />
+          </svg>
+        </motion.div>
       </motion.div>
     </motion.div>
   );

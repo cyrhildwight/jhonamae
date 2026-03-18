@@ -60,18 +60,18 @@ export function BreathingGarden() {
         <div className="absolute inset-0 border border-sage/10 dark:border-white/5 rounded-full" />
         <div className="absolute inset-[15%] border border-sage/10 dark:border-white/5 rounded-full" />
         
-        {/* The Breathing Orb */}
+        {/* The Breathing Orb - Using gradient instead of blur for scroll performance */}
         <motion.div
           animate={{
             scale: !isActive ? 1 : (phase === "inhale" ? 1.5 : (phase === "hold" ? 1.5 : 1)),
             opacity: !isActive ? 0.3 : 1,
-            backgroundColor: phase === "inhale" ? "var(--color-sage)" : (phase === "hold" ? "var(--color-gold)" : "var(--color-dusty-rose)")
+            background: phase === "inhale" ? "radial-gradient(circle, var(--color-sage) 0%, transparent 70%)" : (phase === "hold" ? "radial-gradient(circle, var(--color-gold) 0%, transparent 70%)" : "radial-gradient(circle, var(--color-dusty-rose) 0%, transparent 70%)")
           }}
           transition={{
             scale: { duration: 4, ease: "easeInOut" },
-            backgroundColor: { duration: 1 }
+            background: { duration: 1 }
           }}
-          className="w-32 h-32 md:w-40 md:h-40 rounded-full blur-3xl opacity-20"
+          className="w-32 h-32 md:w-40 md:h-40 rounded-full opacity-30"
         />
 
         <motion.div
@@ -82,7 +82,7 @@ export function BreathingGarden() {
               : "none",
           }}
           transition={{ duration: 4, ease: "easeInOut" }}
-          className="absolute inset-0 flex flex-col items-center justify-center bg-white/40 dark:bg-zinc-900/40 backdrop-blur-3xl rounded-full border border-white dark:border-white/10 shadow-2xl z-10"
+          className="absolute inset-0 flex flex-col items-center justify-center bg-white/60 dark:bg-zinc-900/60 backdrop-blur-md rounded-full border border-white dark:border-white/10 shadow-2xl z-10"
         >
           <AnimatePresence mode="wait">
             {!isActive ? (

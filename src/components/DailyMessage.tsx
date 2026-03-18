@@ -13,11 +13,9 @@ export function DailyMessage({ message }: DailyMessageProps) {
       transition={{ duration: 1, delay: 0.2 }}
       className="max-w-4xl mx-auto glass p-6 md:p-14 rounded-[2rem] md:rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/40 dark:border-white/5 relative z-10 overflow-hidden"
     >
-      {/* Watercolor accent top left */}
-      <div className="absolute -top-10 -left-10 w-48 h-48 bg-dusty-rose/10 dark:bg-dusty-rose/20 rounded-full blur-[80px] pointer-events-none"></div>
-
-      {/* Watercolor accent bottom right */}
-      <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-lavender/10 dark:bg-lavender/20 rounded-full blur-[80px] pointer-events-none"></div>
+      {/* Watercolor accents using radial gradients instead of blur fields for better scroll performance */}
+      <div className="absolute -top-20 -left-20 w-80 h-80 bg-[radial-gradient(circle,rgba(194,91,111,0.15)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(194,91,111,0.25)_0%,transparent_70%)] pointer-events-none"></div>
+      <div className="absolute -bottom-20 -right-20 w-96 h-96 bg-[radial-gradient(circle,rgba(157,132,196,0.15)_0%,transparent_70%)] dark:bg-[radial-gradient(circle,rgba(157,132,196,0.25)_0%,transparent_70%)] pointer-events-none"></div>
 
       <div className="text-center mb-12 relative">
         <motion.span

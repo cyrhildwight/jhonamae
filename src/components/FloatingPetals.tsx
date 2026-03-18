@@ -39,19 +39,21 @@ export function FloatingPetals() {
         <motion.div
           key={particle.id}
           className={`absolute ${particle.type === 'firefly' ? 'hidden dark:block' : 'opacity-40 dark:opacity-20'}`}
-          style={{ willChange: "transform, opacity" }}
+          style={{ 
+            willChange: "transform, opacity",
+            left: `${particle.x}%`
+          }}
           initial={{
-            left: `${particle.x}%`,
-            top: particle.type === 'firefly' ? `${particle.y}%` : `-10%`,
+            y: particle.type === 'firefly' ? `${particle.y}vh` : `-10vh`,
             scale: particle.scale,
             rotate: particle.rotation,
             opacity: 0,
           }}
           animate={{
-            top: particle.type === 'firefly' ? [`${particle.y}%`, `${particle.y - 10}%`, `${particle.y + 10}%`, `${particle.y}%`] : `110%`,
+            y: particle.type === 'firefly' ? [`${particle.y}vh`, `${particle.y - 10}vh`, `${particle.y + 10}vh`, `${particle.y}vh`] : `110vh`,
             rotate: particle.rotation + 360,
             opacity: particle.type === 'firefly' ? [0, 0.8, 0.2, 0.8, 0] : [0, 1, 1, 0],
-            left: [`${particle.x}%`, `${particle.x + (Math.random() * 20 - 10)}%`, `${particle.x}%`],
+            x: [0, (Math.random() * 40 - 20), 0],
           }}
           transition={{
             duration: particle.type === 'firefly' ? particle.duration / 2 : particle.duration,

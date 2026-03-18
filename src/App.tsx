@@ -1,20 +1,21 @@
-import React, { useState, useEffect, Suspense, memo } from "react";
+import { useState, useEffect, Suspense, memo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { EnvelopeReveal } from "./components/EnvelopeReveal";
 import { DailyMessage } from "./components/DailyMessage";
+import { InspirationCards } from "./components/InspirationCards";
+import { DailyCompliment } from "./components/DailyCompliment";
 import { FloatingPetals } from "./components/FloatingPetals";
 import { ButterflyGarden } from "./components/ButterflyGarden";
 import { dailyMessages } from "./data/messages";
 import { Flower2, Moon, Sun } from "lucide-react";
+import React from "react";
 
-// Lazy load components that are further down the page
-const DailyCompliment = React.lazy(() => import("./components/DailyCompliment").then(m => ({ default: m.DailyCompliment })));
+// Lazy load ONLY non-critical components below the fold
 const GrowthGarden = React.lazy(() => import("./components/GrowthGarden").then(m => ({ default: m.GrowthGarden })));
 const GratitudeJournal = React.lazy(() => import("./components/GratitudeJournal").then(m => ({ default: m.GratitudeJournal })));
 const LoveNotes = React.lazy(() => import("./components/LoveNotes").then(m => ({ default: m.LoveNotes })));
 const AffirmationMirror = React.lazy(() => import("./components/AffirmationMirror").then(m => ({ default: m.AffirmationMirror })));
 const BreathingGarden = React.lazy(() => import("./components/BreathingGarden").then(m => ({ default: m.BreathingGarden })));
-const InspirationCards = React.lazy(() => import("./components/InspirationCards").then(m => ({ default: m.InspirationCards })));
 
 // Memoize background components to prevent re-renders
 const MemoizedFloatingPetals = memo(FloatingPetals);
@@ -22,8 +23,8 @@ const MemoizedButterflyGarden = memo(ButterflyGarden);
 
 const LoadingSpinner = () => (
   <div className="flex justify-center p-20">
-    <motion.div 
-      animate={{ rotate: 360 }} 
+    <motion.div
+      animate={{ rotate: 360 }}
       transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
       className="w-10 h-10 border-2 border-dusty-rose/30 border-t-dusty-rose rounded-full"
     />
@@ -80,11 +81,22 @@ export default function App() {
       <MemoizedFloatingPetals />
       <MemoizedButterflyGarden />
 
-      {/* Background Orbs */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 opacity-20 dark:opacity-40">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-dusty-rose/30 rounded-full blur-[120px] animate-pulse"></div>
-        <div className="absolute bottom-[10%] right-[-5%] w-[35%] h-[35%] bg-lavender/30 rounded-full blur-[100px] animate-float"></div>
-        <div className="absolute top-[40%] right-[10%] w-[20%] h-[20%] bg-sage/20 rounded-full blur-[80px]"></div>
+      {/* Background Orbs - Using radial gradients instead of heavy filters for scroll performance */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0 opacity-20 dark:opacity-40" style={{ isolation: 'isolate' }}>
+        <motion.div 
+          animate={{ opacity: [0.1, 0.3, 0.1] }}
+          transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-[radial-gradient(circle,var(--color-dusty-rose)_0%,transparent_70%)] opacity-30"
+        />
+        <motion.div 
+          animate={{ 
+            x: [0, 50, 0],
+            y: [0, -30, 0]
+          }}
+          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute bottom-[10%] right-[-5%] w-[50%] h-[50%] bg-[radial-gradient(circle,var(--color-lavender)_0%,transparent_70%)] opacity-20"
+        />
+        <div className="absolute top-[40%] right-[10%] w-[30%] h-[30%] bg-[radial-gradient(circle,var(--color-sage)_0%,transparent_70%)] opacity-10"></div>
       </div>
 
       {/* Sticky Navigation Header */}
@@ -203,19 +215,19 @@ export default function App() {
               transition={{ duration: 1.5 }}
               className="space-y-32 md:space-y-48"
             >
+              <section className="scroll-mt-32">
+                <DailyCompliment currentDay={currentDay} />
+              </section>
+
+              <section className="scroll-mt-32">
+                <DailyMessage message={message} />
+              </section>
+
+              <section className="scroll-mt-32">
+                <InspirationCards message={message} />
+              </section>
+
               <Suspense fallback={<LoadingSpinner />}>
-                <section className="scroll-mt-32">
-                  <DailyCompliment currentDay={currentDay} />
-                </section>
-
-                <section className="scroll-mt-32">
-                  <DailyMessage message={message} />
-                </section>
-
-                <section className="scroll-mt-32">
-                  <InspirationCards message={message} />
-                </section>
-
                 <section className="scroll-mt-32">
                   <GrowthGarden currentDay={currentDay} />
                 </section>
