@@ -29,22 +29,23 @@ export function EnvelopeReveal({ onOpen, currentDay }: EnvelopeRevealProps) {
       <AnimatePresence>
         {showSparkles && !isOpening && (
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            {Array.from({ length: 18 }).map((_, i) => (
+            {Array.from({ length: 12 }).map((_, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, scale: 0, y: 100 }}
                 animate={{ 
-                  opacity: [0, 0.5, 0], 
-                  scale: [0, 1.2, 0],
-                  y: [-30, -200],
-                  x: Math.sin(i) * 120
+                  opacity: [0, 0.4, 0], 
+                  scale: [0, 1.1, 0],
+                  y: [-30, -180],
+                  x: Math.sin(i) * 100
                 }}
                 transition={{ 
-                  duration: 4 + Math.random() * 5, 
+                  duration: 4 + Math.random() * 4, 
                   repeat: Infinity, 
                   delay: i * 0.4 
                 }}
-                className="absolute left-1/2 top-1/2 w-1.5 h-1.5 bg-gold/40 dark:bg-gold/60 rounded-full blur-[1px]"
+                style={{ willChange: "transform, opacity" }}
+                className="absolute left-1/2 top-1/2 w-1 h-1 bg-gold/40 dark:bg-gold/60 rounded-full"
               />
             ))}
           </div>
@@ -88,16 +89,15 @@ export function EnvelopeReveal({ onOpen, currentDay }: EnvelopeRevealProps) {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           animate={isOpening ? { 
-            y: [-10, -80], 
-            opacity: [1, 0], 
-            scale: [1, 1.1, 0.7],
-            filter: "blur(12px)"
+            y: [-10, -60], 
+            opacity: [1, 0.5, 0], 
+            scale: [1, 1.05, 0.8]
           } : { 
             y: [0, -15, 0],
           }}
           transition={
             isOpening 
-              ? { duration: 1.2, ease: "anticipate" } 
+              ? { duration: 0.8, ease: "easeOut" } 
               : { y: { duration: 5, repeat: Infinity, ease: "easeInOut" } }
           }
         >

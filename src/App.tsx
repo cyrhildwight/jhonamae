@@ -201,8 +201,8 @@ export default function App() {
               key="envelope"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9, filter: "blur(20px)" }}
-              transition={{ duration: 0.1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.4 }}
               className="min-h-[80vh] flex items-center justify-center"
             >
               <EnvelopeReveal onOpen={() => setIsOpened(true)} currentDay={currentDay} />
